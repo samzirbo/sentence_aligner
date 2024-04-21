@@ -1,7 +1,7 @@
 import numpy as np
 
 from sentence_transformers import SentenceTransformer
-from utils import yield_overlaps
+from bertalign.utils import yield_overlaps
 
 class Encoder:
     def __init__(self, model_name):

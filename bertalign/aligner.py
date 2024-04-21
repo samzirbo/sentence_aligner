@@ -1,6 +1,6 @@
 from . import model
-from corelib import *
-from utils import *
+from bertalign.corelib import *
+from bertalign.utils import *
 
 class Bertalign:
     def __init__(self,
