@@ -59,8 +59,8 @@ def align_corpus(
             if talk_id in aligned_talks:
                 continue
 
-            src = talk['TRANSCRIPT'][src_lang]
-            tgt = talk['TRANSCRIPT'][tgt_lang]
+            src = talk['TRANSCRIPTS'][src_lang]
+            tgt = talk['TRANSCRIPTS'][tgt_lang]
 
             # align the sentences
             aligner = Bertalign(
