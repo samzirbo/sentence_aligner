@@ -7,6 +7,7 @@ from bertalign import Bertalign
 def align_corpus(
     input_file: str,
     output_file: str,
+    gender: bool = True,
     src_lang: str = "en",
     tgt_lang: str = "es",
     no_talks: int = None,
@@ -19,19 +20,6 @@ def align_corpus(
     len_penalty: bool = True,
     is_split: bool = False
 ):
-    """
-    Align the sentences in the input file using the bertalign model
-
-    Args:
-    input_file: str
-        The input file containing the sentences to align
-    output_file: str
-        The output file to write the aligned sentences
-    no_talks: int
-        The number of talks to align (given that the alignment process is time-consuming, it can process part of the talks)
-    offset: int
-        The offset to start aligning the talks in case the alignment is done in parts, concurrently
-    """
 
     # check if the output file exists
     if not os.path.exists(output_file):
@@ -55,6 +43,7 @@ def align_corpus(
             talk = json.loads(line)
             talk_id = talk['TALK-ID']
             talk_name = talk['TALK-NAME']
+            talk_gender = talk['GENDER'] if gender else None
 
             if talk_id in aligned_talks:
                 continue
@@ -79,12 +68,12 @@ def align_corpus(
             # write the aligned sentences to the output file
             with open(output_file, "a") as fout:
                 for src, tgt in aligner.get_sentences():
-                    fout.write(json.dumps({
-                        "TALK-ID": talk_id,
-                        "TALK-NAME": talk_name,
-                        src_lang.upper(): src,
-                        tgt_lang.upper(): tgt
-                    }) + "\n")
+                    item = {"TALK-ID": talk_id, "TALK-NAME": talk_name}
+                    if gender:
+                        item['GENDER'] = talk_gender
+                    item[src_lang.upper()] = src
+                    item[tgt_lang.upper()] = tgt
+                    fout.write(json.dumps(item) + "\n")
 
             aligned_talks.add(talk_id)
 
@@ -97,6 +86,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Align the sentences in the input file using the bertalign model")
     parser.add_argument("--INPUT", type=str, help="The input file containing the sentences to align")
     parser.add_argument("--OUTPUT", type=str, help="The output file to write the aligned sentences")
+    parser.add_argument("--GENDER", type=bool, default=True, help="The data containes gender information")
     parser.add_argument("--SRC_LANG", type=str, default="en", help="The source language")
     parser.add_argument("--TGT_LANG", type=str, default="es", help="The target language")
     parser.add_argument("--NO_TALKS", type=int, default=None, help="The number of talks to align")
