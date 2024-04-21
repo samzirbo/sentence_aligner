@@ -48,7 +48,7 @@ def align_corpus(
 
     # read the input file
     with open(input_file, "r") as fin:
-        for idx, line in tqdm(enumerate(fin), total=no_talks):
+        for idx, line in tqdm(enumerate(fin), total=offset + no_talks):
             if idx < offset:
                 continue
 
