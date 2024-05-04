@@ -105,6 +105,7 @@ if __name__ == "__main__":
     align_corpus(
         args.INPUT,
         args.OUTPUT,
+        args.GENDER,
         src_lang=args.SRC_LANG,
         tgt_lang=args.TGT_LANG,
         no_talks=args.NO_TALKS,
