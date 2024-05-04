@@ -43,6 +43,7 @@ def align_corpus(
             talk = json.loads(line)
             talk_id = talk['TALK-ID']
             talk_name = talk['TALK-NAME']
+            print(gender)
             talk_gender = talk['GENDER'] if gender else None
 
             if talk_id in aligned_talks:
@@ -86,7 +87,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Align the sentences in the input file using the bertalign model")
     parser.add_argument("--INPUT", type=str, help="The input file containing the sentences to align")
     parser.add_argument("--OUTPUT", type=str, help="The output file to write the aligned sentences")
-    parser.add_argument("--GENDER", type=bool, default=True, help="The data containes gender information")
+    parser.add_argument("--GENDER", type=bool, default=False, help="The data containes gender information")
     parser.add_argument("--SRC_LANG", type=str, default="en", help="The source language")
     parser.add_argument("--TGT_LANG", type=str, default="es", help="The target language")
     parser.add_argument("--NO_TALKS", type=int, default=None, help="The number of talks to align")
