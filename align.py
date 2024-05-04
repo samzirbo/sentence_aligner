@@ -54,6 +54,8 @@ def align_corpus(
             # align the sentences
             aligner = Bertalign(
                 src, tgt,
+                src_lang=src_lang,
+                tgt_lang=tgt_lang,
                 max_align=max_align,
                 top_k=top_k,
                 win=win,
