@@ -43,7 +43,6 @@ def align_corpus(
             talk = json.loads(line)
             talk_id = talk['TALK-ID']
             talk_name = talk['TALK-NAME']
-            print(gender)
             talk_gender = talk['GENDER'] if gender else None
 
             if talk_id in aligned_talks:
